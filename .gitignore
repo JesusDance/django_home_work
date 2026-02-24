@@ -9,3 +9,4 @@ __pycache__/
 
 # Virtualenv
 venv/
+production_env/
