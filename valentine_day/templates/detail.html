@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h1>Best woman i've ever had!</h1>
+    <img src="/media/{{ photo.file }}" width="400">
+    <br>
+<a href="{% url 'my-list' %}">Назад на головну!</a>
+</body>
+</html>

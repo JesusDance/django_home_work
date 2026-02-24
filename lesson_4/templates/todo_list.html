@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <ol>
+        {% for todo in lets_do_it|dictsort:"priority" %}
+        <li>{{ todo.priority }} {{ todo.task }}</li>
+        {% endfor %}
+    </ol>
+</body>
+</html>
