@@ -10,3 +10,8 @@ __pycache__/
 # Virtualenv
 venv/
 production_env/
+
+*log
+*pot
+*pyt
+db.sqlite3

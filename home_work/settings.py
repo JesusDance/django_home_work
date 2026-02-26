@@ -18,7 +18,8 @@ from pathlib import Path
 import os
 from os import getenv
 
-from django.conf.global_settings import SECURE_REFERRER_POLICY
+import dj_database_url
+from django.conf.global_settings import SECURE_REFERRER_POLICY, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,12 +27,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#@&!k54@s&^oxkmof1n1hthx#^nujmqbzuvnvs1)u5fck(=ny8777777777777'
+SECRET_KEY = os.environ.get('SECRET_KEY', '#@&!k54@s&^oxkmof1n1hthx#^nujmqbzuvnvs1)u5fck(=ny8777777777777')
+
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost',]
 
 SECURE_HSTS_SECONDS = 60
 
@@ -40,7 +44,7 @@ SECURE_HSTS_PRELOAD = True
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = True
 #SECURE_REFERRER_POLICY = 'no-referrer'
 
 # Application definition
@@ -79,6 +83,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -108,23 +113,24 @@ WSGI_APPLICATION = 'home_work.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
-    }
-}
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': os.getenv('DB_NAME'),
-#         'USER': os.getenv('DB_USER'),
-#         'PASSWORD': os.getenv('DB_PASSWORD'),
-#         'HOST': os.getenv('DB_HOST'),
-#         'PORT': os.getenv('DB_PORT'),
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'db.sqlite3',
 #     }
 # }
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'admin',
+        'USER': 'itvdn',
+        'PASSWORD': 'itvdn',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+db_from_env =dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -161,9 +167,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
  # тут лежать CSS/JS
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'valentine_day', 'static'),]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'home_work', 'static'),]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'valentine_day', 'static', 'tmp')
