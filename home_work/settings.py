@@ -35,7 +35,8 @@ EMAIL_HOST_PASSWORD =os.environ.get('EMAIL_HOST_PASSWORD')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost',]
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost',
+                 'django-homework-test-ba7ff4ee75bd.herokuapp.com']
 
 SECURE_HSTS_SECONDS = 60
 
